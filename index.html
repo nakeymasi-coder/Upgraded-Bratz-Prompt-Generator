@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Bratz-Chibi Woman Generator</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { box-sizing: border-box; font-family: 'Inter', -webkit-system-font, system-ui, sans-serif; overflow-x:hidden; }
+    .gradient-bg {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,215,160,.18), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(255,120,220,.16), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(92,145,255,.18), transparent 34%),
+        linear-gradient(135deg, #0f0720 0%, #29124d 32%, #3b1368 65%, #0f0720 100%);
+      background-size: 140% 140%;
+      animation: bgShift 16s ease-in-out infinite;
+      position: relative;
+      min-height: 100vh;
+    }
+    .gradient-bg::before, .gradient-bg::after {
+      content: '';
+      position: fixed;
+      inset: auto;
+      width: 24rem;
+      height: 24rem;
+      border-radius: 9999px;
+      filter: blur(26px);
+      opacity: .38;
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 12s ease-in-out infinite;
+    }
+    .gradient-bg::before { top: 8%; left: -6%; background: radial-gradient(circle, rgba(255,105,180,.8), rgba(255,105,180,0)); }
+    .gradient-bg::after { right: -8%; bottom: 10%; background: radial-gradient(circle, rgba(88,147,255,.78), rgba(88,147,255,0)); animation-delay: -6s; }
+    .floating-glam {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .floating-glam span {
+      position: absolute; display:block; border-radius:9999px;
+      background: radial-gradient(circle, rgba(255,255,255,.92), rgba(255,255,255,.12) 38%, transparent 62%);
+      box-shadow: 0 0 18px rgba(255,255,255,.38), 0 0 34px rgba(255,179,234,.28);
+      animation: sparkleFloat linear infinite;
+      opacity:.72;
+    }
+    .glass-effect {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 24px 80px rgba(8,4,24,.34);
+      position: relative; z-index: 1;
+    }
+    .marquee-wrap {
+      overflow:hidden; white-space:nowrap; border:1px solid rgba(255,255,255,.22);
+      background: linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.2), rgba(255,255,255,.12));
+      box-shadow: 0 0 18px rgba(255,192,203,.26), inset 0 0 24px rgba(255,255,255,.08);
+    }
+    .marquee-track { display:inline-block; padding-left:100%; animation: marquee 22s linear infinite; }
+    .custom-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e"); background-position: right .5rem center; background-repeat:no-repeat; background-size:1.5em 1.5em; padding-right:2.5rem; }
+    .copy-button, .preset-chip { transition: all .25s ease; }
+    .copy-button:hover, .preset-chip:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,.15); }
+    .section-card {
+      transition: all .3s ease;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.05) inset, 0 0 22px rgba(168,85,247,.16), 0 0 38px rgba(59,130,246,.12);
+      position: relative;
+    }
+    .section-card::before {
+      content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+      box-shadow: inset 0 0 24px rgba(255,255,255,.08), 0 0 28px rgba(255,145,208,.12);
+    }
+    .section-card:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255,255,255,.05) inset, 0 0 26px rgba(236,72,153,.2), 0 0 50px rgba(99,102,241,.16); }
+    details summary::-webkit-details-marker { display:none; }
+    .accordion-summary::after { content:'+'; font-size:1.5rem; font-weight:700; color:#e9d5ff; text-shadow:0 0 14px rgba(216,180,254,.85); }
+    details[open] .accordion-summary::after { content:'−'; }
+    .section-heading { text-shadow: 0 0 16px rgba(255,255,255,.22), 0 0 28px rgba(236,72,153,.24); }
+    .lock-btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:.35rem; min-width:88px;
+      padding:.55rem .85rem; border-radius:9999px; font-size:.85rem; font-weight:700;
+      color:#fff; border:1px solid rgba(255,255,255,.24);
+      background: linear-gradient(135deg, rgba(99,102,241,.62), rgba(236,72,153,.55));
+      box-shadow: 0 0 18px rgba(168,85,247,.3);
+      transition: all .25s ease;
+    }
+    .lock-btn:hover { transform: translateY(-1px); box-shadow: 0 0 24px rgba(236,72,153,.42); }
+    .lock-btn.locked { background: linear-gradient(135deg, rgba(16,185,129,.78), rgba(5,150,105,.8)); box-shadow: 0 0 22px rgba(16,185,129,.42); }
+    .field-locked select, .field-locked input { border-color: rgba(16,185,129,.75) !important; box-shadow: 0 0 0 2px rgba(16,185,129,.14), 0 0 18px rgba(16,185,129,.18); }
+    .action-button { transition: all .25s ease; }
+    .action-button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,.15); }
+    .scroll-glow-btn {
+      position: fixed; right: 18px; z-index: 50; width: 52px; height: 52px; border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.35); color: white; font-size: 1.4rem; font-weight: 700;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(236,72,153,.95));
+      box-shadow: 0 0 14px rgba(236,72,153,.55), 0 0 28px rgba(124,58,237,.45);
+      backdrop-filter: blur(8px); transition: all .25s ease;
+    }
+    .scroll-glow-btn:hover { transform: scale(1.07); box-shadow: 0 0 18px rgba(236,72,153,.8), 0 0 34px rgba(124,58,237,.65); }
+    #scroll-up-btn { bottom: 90px; }
+    #scroll-down-btn { bottom: 24px; }
+    .footer-note { text-shadow:0 0 12px rgba(255,255,255,.18); }
+    @keyframes bgShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes orbFloat { 0%,100% { transform: translateY(0) translateX(0) scale(1); } 50% { transform: translateY(-18px) translateX(16px) scale(1.08); } }
+    @keyframes sparkleFloat { from { transform: translateY(110vh) scale(.85); } to { transform: translateY(-18vh) scale(1.18); } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    .multi-select-box { min-height: 9.5rem; background-image: none; }
+    .field-hint { font-size: .72rem; color: rgba(255,255,255,.78); margin-top: .45rem; }
+    .history-item { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 1rem; padding: 1rem; }
+    .history-item p { color: #f3f4f6; white-space: pre-wrap; }
+    .history-time { font-size: .75rem; color: rgba(255,255,255,.72); margin-bottom: .45rem; display:block; }
+    .variation-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 1rem; padding: 1rem; }
+    .variation-card h4 { color: white; font-weight: 700; margin-bottom: .5rem; }
+    .variation-card p { color: rgba(255,255,255,.95); white-space: pre-wrap; }
+
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+<body class="min-h-full gradient-bg">
+  <div class="floating-glam" aria-hidden="true">
+    <span style="left:4%; width:12px; height:12px; animation-duration:18s; animation-delay:-2s;"></span>
+    <span style="left:12%; width:20px; height:20px; animation-duration:24s; animation-delay:-6s;"></span>
+    <span style="left:22%; width:14px; height:14px; animation-duration:20s; animation-delay:-9s;"></span>
+    <span style="left:34%; width:28px; height:28px; animation-duration:28s; animation-delay:-4s;"></span>
+    <span style="left:46%; width:16px; height:16px; animation-duration:22s; animation-delay:-12s;"></span>
+    <span style="left:58%; width:24px; height:24px; animation-duration:26s; animation-delay:-8s;"></span>
+    <span style="left:68%; width:13px; height:13px; animation-duration:17s; animation-delay:-1s;"></span>
+    <span style="left:78%; width:30px; height:30px; animation-duration:30s; animation-delay:-10s;"></span>
+    <span style="left:88%; width:18px; height:18px; animation-duration:21s; animation-delay:-14s;"></span>
+  </div>
+  <main class="container mx-auto px-4 py-8 max-w-6xl">
+    <header class="text-center mb-8">
+      <h1 id="app-title" class="text-5xl font-extrabold text-white mb-4 tracking-tight">Luxury Bratz–Chibi Woman Generator</h1>
+      <div class="marquee-wrap rounded-full py-2 px-4 max-w-4xl mx-auto mb-6"><div class="marquee-track text-sm md:text-base font-semibold text-white/95">✨ Luxury Generator Bundle • Instant Download • Premium Images • &nbsp;&nbsp;&nbsp; ✨ Luxury Generator Bundle • Instant Download • Premium Images • &nbsp;&nbsp;&nbsp;</div></div>
+      <p id="app-description" class="text-lg text-white/90 max-w-3xl mx-auto mb-6">Fill the sections below. Use dropdowns to quickly swap looks. Output is a clean prompt you can use in your image tool of choice. Hyper-realistic, glossy, 8K character styling included in the final prompt.</p>
+    </header>
+
+    <div class="glass-effect rounded-2xl p-8 mb-8 shadow-2xl">
+      <div class="section-card bg-white/50 rounded-xl p-6 mb-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">✨ Presets</h3>
+        <div id="preset-chips" class="flex flex-wrap gap-3"></div>
+      </div>
+
+      <form id="generator-form" class="space-y-6">
+        <details open class="section-card bg-white/50 rounded-xl p-6">
+          <summary class="accordion-summary flex items-center justify-between cursor-pointer list-none">
+            <span class="text-xl font-semibold text-gray-800" class="section-heading">🪞 Identity & Beauty</span>
+          </summary>
+          <div id="identity-beauty-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+        </details>
+
+        <details class="section-card bg-white/50 rounded-xl p-6">
+          <summary class="accordion-summary flex items-center justify-between cursor-pointer list-none">
+            <span class="text-xl font-semibold text-gray-800" class="section-heading">👠 Fashion & Styling</span>
+          </summary>
+          <div id="fashion-styling-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+        </details>
+
+        <details class="section-card bg-white/50 rounded-xl p-6">
+          <summary class="accordion-summary flex items-center justify-between cursor-pointer list-none">
+            <span class="text-xl font-semibold text-gray-800" class="section-heading">🌆 Scene & Atmosphere</span>
+          </summary>
+          <div id="scene-atmosphere-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+        </details>
+
+        <details class="section-card bg-white/50 rounded-xl p-6">
+          <summary class="accordion-summary flex items-center justify-between cursor-pointer list-none">
+            <span class="text-xl font-semibold text-gray-800" class="section-heading">📸 Technical Controls</span>
+          </summary>
+          <div id="technical-controls-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+        </details>
+      </form>
+    </div>
+
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl">
+      <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+        <h2 id="output-label" class="text-2xl font-bold text-gray-800">Generated Prompt</h2>
+        <div class="flex flex-wrap gap-3">
+          <button id="generate-btn" type="button" class="action-button bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg">⚡ Generate</button>
+          <button id="copy-btn" type="button" class="copy-button bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Generated Prompt</button>
+          <button id="clear-btn" type="button" class="action-button bg-gradient-to-r from-slate-600 to-slate-800 text-white px-5 py-3 rounded-lg font-semibold shadow-lg">🧹 Clear All</button>
+          <button id="random-btn" type="button" class="action-button bg-gradient-to-r from-fuchsia-600 to-rose-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg">🎲 Random</button>
+          <button id="save-prompt-btn" type="button" class="action-button bg-gradient-to-r from-emerald-600 to-lime-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg">💾 Save Prompt</button>
+          <button id="variations-btn" type="button" class="action-button bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg">✨ 3 More Variations</button>
+        </div>
+      </div>
+      <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+        <p id="generated-prompt" class="text-gray-700 leading-relaxed min-h-[140px] whitespace-pre-wrap"></p>
+      </div>
+      <div id="copy-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Prompt copied to clipboard!</div>
+    </div>
+
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl mt-8">
+      <details>
+        <summary class="accordion-summary flex items-center justify-between cursor-pointer list-none">
+          <span class="text-2xl font-bold text-white">🗂️ Prompt History</span>
+        </summary>
+        <div class="mt-5 space-y-4" id="prompt-history-list">
+          <div class="history-item"><p>No saved prompts yet.</p></div>
+        </div>
+      </details>
+    </div>
+
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl mt-8">
+      <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+        <h2 class="text-2xl font-bold text-white">3 Prompt Variations</h2>
+        <button id="copy-variations-btn" type="button" class="copy-button bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Variations</button>
+      </div>
+      <div id="variations-output" class="space-y-4">
+        <div class="variation-card"><p>Click “3 More Variations” to generate alternate prompts.</p></div>
+      </div>
+      <div id="copy-variations-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Variations copied!</div>
+    </div>
+
+
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl mt-8">
+      <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+        <h2 class="text-2xl font-bold text-gray-800">Custom GPT Instructions</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Instructions</h3>
+            <button id="copy-gpt-instructions-btn" type="button" class="copy-button bg-gradient-to-r from-cyan-600 to-blue-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Instructions</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="custom-gpt-instructions-output" class="text-gray-700 leading-relaxed min-h-[220px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-gpt-instructions-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Instructions copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Starter Questions</h3>
+            <button id="copy-gpt-starters-btn" type="button" class="copy-button bg-gradient-to-r from-sky-600 to-indigo-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Starter Questions</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="custom-gpt-starters-output" class="text-gray-700 leading-relaxed min-h-[140px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-gpt-starters-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Starter questions copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Knowledge</h3>
+            <button id="copy-gpt-knowledge-btn" type="button" class="copy-button bg-gradient-to-r from-blue-700 to-violet-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Knowledge</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="custom-gpt-knowledge-output" class="text-gray-700 leading-relaxed min-h-[180px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-gpt-knowledge-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Knowledge copied!</div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl mt-8">
+      <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+        <h2 class="text-2xl font-bold text-gray-800">Video &amp; Suno Prompt Scripts</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">8-Second Video Prompt Script</h3>
+            <button id="copy-video-script-btn" type="button" class="copy-button bg-gradient-to-r from-emerald-600 to-teal-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Video Script</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="video-script-output" class="text-gray-700 leading-relaxed min-h-[160px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-video-script-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Video script copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Suno Jingle Prompt</h3>
+            <button id="copy-suno-jingle-btn" type="button" class="copy-button bg-gradient-to-r from-pink-600 to-rose-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Jingle Prompt</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="suno-jingle-output" class="text-gray-700 leading-relaxed min-h-[140px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-suno-jingle-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Jingle prompt copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Suno 30-Second Song Prompt</h3>
+            <button id="copy-suno-30-btn" type="button" class="copy-button bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy 30-Second Prompt</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="suno-30-output" class="text-gray-700 leading-relaxed min-h-[140px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-suno-30-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ 30-second prompt copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Suno 1-Minute Song Prompt</h3>
+            <button id="copy-suno-60-btn" type="button" class="copy-button bg-gradient-to-r from-violet-600 to-indigo-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy 1-Minute Prompt</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="suno-60-output" class="text-gray-700 leading-relaxed min-h-[140px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-suno-60-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ 1-minute prompt copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Suno Settings Suggestions</h3>
+            <button id="copy-suno-settings-btn" type="button" class="copy-button bg-gradient-to-r from-amber-600 to-orange-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Settings</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="suno-settings-output" class="text-gray-700 leading-relaxed min-h-[120px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-suno-settings-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Settings copied!</div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-3 gap-3 flex-wrap">
+            <h3 class="text-xl font-bold text-gray-800">Suno Lyrics (1000 Characters or Less)</h3>
+            <button id="copy-suno-lyrics-btn" type="button" class="copy-button bg-gradient-to-r from-red-600 to-pink-700 text-white px-5 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl">📋 Copy Lyrics</button>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-300">
+            <pre id="suno-lyrics-output" class="text-gray-700 leading-relaxed min-h-[180px] whitespace-pre-wrap font-sans"></pre>
+          </div>
+          <div id="copy-suno-lyrics-feedback" class="mt-4 text-center text-green-600 font-medium opacity-0 transition-opacity duration-300">✅ Lyrics copied!</div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer-note text-center text-white/80 text-sm pb-8 px-4 relative z-10">all rights reserved by glamorousgrammyglowup</footer>
+</main>
+
+  <button id="scroll-up-btn" type="button" class="scroll-glow-btn" aria-label="Scroll to top">↑</button>
+  <button id="scroll-down-btn" type="button" class="scroll-glow-btn" aria-label="Scroll to bottom">↓</button>
+
+  <script>
+    const defaultConfig = {
+      app_title: "Luxury Bratz–Chibi Woman Generator",
+      app_description: "Fill the sections below. Use dropdowns to quickly swap looks. Output is a clean prompt you can use in your image tool of choice.",
+      output_label: "Generated Prompt"
+    };
+
+    const promptHistory = [];
+    const maxHistoryItems = 12;
+
+    const categoryOptions = {"locations": ["None", "airport lounge", "art gallery", "balcony skyline", "beach boardwalk", "beauty studio", "boutique hotel", "bridal suite", "city rooftop", "concert venue", "courtyard garden", "desert highway", "designer closet", "downtown alley", "dreamy cloud set", "editorial stage", "fancy bathroom", "fashion runway", "flower wall", "garden gazebo", "glam room", "golden hallway", "grand staircase", "high-rise penthouse", "jewelry showroom", "lakefront dock", "luxury bedroom", "luxury casino", "luxury office", "marble lobby", "miami poolside", "mirror room", "modern loft", "neon arcade", "nightclub entrance", "old hollywood set", "outdoor café", "parking garage", "private jet", "recording studio"], "backgrounds": ["None", "abstract blur", "art deco backdrop", "aurora glow", "bokeh lights", "champagne shimmer", "charcoal wall", "city skyline", "cloudy gradient", "crystal curtain", "deep black void", "diamond sparkle wall", "dreamy pastel gradient", "editorial beige set", "emerald marble", "floral mural", "foggy neon backdrop", "gold foil texture", "golden drapery", "holographic shimmer", "iridescent wall", "lavender haze", "liquid chrome", "luxury backdrop", "marble texture", "midnight blue glow", "minimal studio", "mirror mosaic", "neon tunnel", "off-white cream", "ombre sunset", "pearl sheen", "pink velvet curtain", "platinum gradient", "pure white studio", "rainbow prism", "rose-gold shimmer", "smoky gray fade", "soft blush gradient", "transparent"], "fog": ["None", "amber haze", "atmospheric steam", "barely-there mist", "blue club fog", "champagne fog", "cinematic fog", "cloud-like haze", "cold morning mist", "color-shift mist", "cotton-candy haze", "creeping floor fog", "crystal mist", "dense editorial fog", "diffused stage fog", "dim smoky haze", "dreamy soft mist", "dry ice effect", "electric neon fog", "ethereal vapor", "faint smoke ribbon", "glam haze", "gold dust haze", "golden fog", "heavy moody smoke", "lavender mist", "light smoke veil", "metallic mist", "midnight haze", "no fog", "pearl vapor", "pink mist", "purple smoke bloom", "rainy mist", "rose mist", "silvery haze", "soft halo fog", "soft smoky air", "spotlit fog", "sunlit dust haze"], "weather": ["None", "aurora sky", "clear skies", "cloudy", "dewy morning", "drizzly", "dusty breeze", "electric storm", "foggy", "frozen air", "golden sunshine", "hail sparkle", "harvest breeze", "heatwave shimmer", "humid heat", "light snow", "lightning storm", "misty", "monsoon mood", "moonlit stillness", "no weather effect", "overcast", "rain shower", "rainbow after rain", "snow flurries", "snowfall", "soft breeze", "soft drizzle", "spring rain", "starry night", "storm clouds", "summer humidity", "sun shower", "sunny", "sunset warmth", "thunderstorm", "tropical rain", "wind gusts", "windy", "winter frost"], "time_of_day": ["None", "after dark", "afterglow", "afternoon", "blue hour", "brunch hour", "candlelit night", "city nightfall", "dawn", "daybreak", "early evening", "glow hour", "golden hour", "high noon", "late afternoon", "late night", "magic hour", "mid-morning", "midday", "midnight", "moonlit evening", "moonrise", "morning", "neon midnight", "nightfall", "noon", "pink dusk", "post-rain glow", "pre-dawn", "silver dawn", "soft sunrise", "starry twilight", "stormy afternoon", "summer sunset", "sunlit morning", "sunrise", "sunset", "twilight", "velvet evening", "warm dusk"], "seasons": ["None", "all-season glam", "autumn", "autumn leaves", "blooming spring", "coastal summer", "crisp fall", "deep winter", "early autumn", "early spring", "endless summer", "fall harvest", "festive winter", "first frost", "floral spring", "frosted winter", "golden autumn", "holiday winter", "hot summer", "indian summer", "late autumn", "late spring", "late summer", "lush spring", "mild winter", "monsoon season", "no seasonal cue", "peak spring", "peak summer", "rainy season", "romantic spring", "snowy winter", "spring garden", "spring thaw", "summer heat", "summer nights", "sunny spring", "tropical summer", "winter glam", "winter holiday"], "color_palette": ["None", "amethyst and silver", "barbie pink and white", "black and gold", "blush and champagne", "bronze and cream", "burgundy and gold", "candy pink and lilac", "caramel and nude", "champagne and ivory", "chocolate and gold", "cobalt and chrome", "coral and peach", "crimson and black", "dusty rose and taupe", "emerald and gold", "fuchsia and violet", "gold and white", "hot pink and black", "ice blue and silver", "ivory and pearl", "lavender and blush", "lemon and cream", "mint and silver", "monochrome black", "multicolor glam", "navy and gold", "nude and mocha", "olive and bronze", "peach and gold", "pearl and platinum", "pink and gold", "platinum and white", "purple and blue", "red and black", "rose gold and blush", "royal blue and gold", "sage and cream", "silver and black", "sunset ombre"], "ethnicity": ["None", "african american", "afro-brazilian", "afro-caribbean", "afro-latina", "arab", "armenian", "asian american", "brazilian", "caribbean", "colombian", "dominican", "east african", "ethiopian", "filipina", "haitian", "indigenous latina", "jamaican", "korean", "latin american", "mediterranean", "mexican", "middle eastern", "mixed heritage", "moroccan", "nigerian", "north african", "pakistani", "persian", "puerto rican", "senegalese", "somali", "south asian", "south indian", "sudanese", "trinidadian", "turkish", "ugandan", "venezuelan", "west african"], "hair_color": ["None", "ash blonde", "auburn", "blue black", "burgundy", "caramel brown", "chestnut brown", "chocolate brown", "cinnamon copper", "copper red", "cream blonde", "dark brown", "dirty blonde", "emerald green", "espresso brown", "fantasy rainbow", "ginger", "golden blonde", "honey blonde", "icy platinum", "jet black", "lavender", "light brown", "mahogany", "midnight blue", "mint green", "mushroom brown", "natural black", "ombre brown to blonde", "pastel pink", "platinum blonde", "purple plum", "rose gold", "silver gray", "soft black", "strawberry blonde", "sunset orange", "teal blue", "two-tone split", "warm brunette"], "eye_color": ["None", "amber", "aqua", "black-brown", "blue-gray", "bronze", "caramel", "chestnut", "cocoa", "copper", "dark brown", "deep hazel", "emerald", "gold-flecked brown", "golden hazel", "gray", "green", "hazel", "honey", "ice blue", "jade", "lavender", "light brown", "mahogany", "midnight blue", "moss green", "obsidian", "olive green", "pearl gray", "rose-brown", "sapphire", "sea green", "silver", "smoky gray", "steel blue", "storm blue", "topaz", "turquoise", "violet", "warm brown"], "hairstyle": ["None", "afro puffs", "asymmetrical bob", "bantu knots", "blunt bob", "body wave sew-in", "box braids", "bubble ponytail", "buzz cut", "cornrows", "curly pixie", "finger waves", "french curl braids", "goddess braids", "half-up half-down", "high bun", "high ponytail", "knotless braids", "layered long waves", "lemonade braids", "loc ponytail", "long silky straight", "loose curls", "messy bun", "micro braids", "pixie cut", "rolerset curls", "rounded afro", "side swoop", "silk press", "sleek bob", "sleek low bun", "soft beach waves", "space buns", "traditional locs", "tribal braids", "twist out", "updo with tendrils", "waist-length straight", "wet and wavy"], "outfit_style": ["None", "after-hours glam", "airport luxe", "athleisure glam", "baddie casual", "birthday glam", "boss babe chic", "bougie brunch look", "clubwear", "concert slay", "corset set", "date-night glam", "denim-on-denim", "designer casual", "editorial fashion look", "festival glam", "fitted jumpsuit look", "girls-night-out", "hood-rich glam", "latex look", "lounge luxe", "matching set", "mesh glam", "mini dress moment", "monochrome fit", "off-duty model", "old-money glam", "party-girl glam", "resort chic", "rich auntie casual", "romper look", "sexy corporate", "sporty glam", "stacked streetwear", "streetwear", "summer baddie fit", "two-piece set", "vacation glam", "velvet night look", "vip event glam"], "top_style": ["None", "baby tee", "bandage top", "bikini top", "blazer top", "bodysuit", "bralette", "button-up shirt", "cape top", "corset top", "crop top", "cutout top", "denim top", "draped top", "feather top", "graphic tee", "halter top", "lace top", "leather top", "long-sleeve fitted top", "mesh top", "off-shoulder top", "one-shoulder top", "oversized hoodie", "oversized tee", "peplum top", "plunge top", "puffer jacket top", "ribbed tank", "ruched top", "satin blouse", "sequined top", "sheer top", "strapless top", "sweatshirt", "tube top", "turtleneck top", "utility vest", "wrap top", "zip-up jacket"], "bottom_style": ["None", "biker shorts", "bootcut pants", "cargo pants", "cargo shorts", "denim shorts", "distressed jeans", "drawstring pants", "flare pants", "fitted mini skirt", "high-slit skirt", "joggers", "lace pants", "leather mini skirt", "leather pants", "leggings", "maxi skirt", "micro mini skirt", "mini skirt", "parachute pants", "pencil skirt", "pleated mini skirt", "printed pants", "ripped jeans", "ruched skirt", "satin shorts", "sequin skirt", "short shorts", "skinny jeans", "skort", "slit maxi skirt", "stacked pants", "straight-leg jeans", "tailored shorts", "track pants", "wide-leg pants", "wrap skirt", "yoga pants", "zip-detail pants", "cargo skirt"], "shoes": ["None", "ankle boots", "ballet heels", "barefoot glam", "bedazzled pumps", "block heels", "combat boots", "cowgirl boots", "crystal heels", "designer loafers", "diamond sandals", "feather heels", "gladiator heels", "glitter boots", "gold stilettos", "heeled mules", "knee-high boots", "lace-up heels", "luxury sneakers", "metallic stilettos", "nude pumps", "open-toe heels", "over-the-knee boots", "peep-toe platforms", "platform sandals", "pointed heels", "pointed-toe boots", "red-bottom heels", "rhinestone sandals", "satin pumps", "silver stilettos", "slingback heels", "sparkly boots", "square-toe heels", "strappy sandals", "thigh-high boots", "transparent heels", "velvet pumps", "wedges", "white sneakers"], "lashes": ["None", "airy lashes", "anime-inspired lashes", "bare lashes", "bold bottom lashes", "bold glam lashes", "cat-eye lashes", "classic extension set", "cluster lashes", "doll lashes", "dramatic lashes", "feathered lashes", "fluttery lashes", "fox-eye lashes", "full volume lashes", "hybrid lash set", "individual lashes", "long wispy lashes", "manga lashes", "megal volume", "natural lashes", "no lashes emphasis", "outer-corner flare lashes", "piecey lashes", "rounded doll lashes", "short fluffy lashes", "siren lashes", "soft curl lashes", "soft glam lashes", "spiky editorial lashes", "stacked lashes", "strip lashes", "sultry lashes", "swept-up lashes", "textured volume lashes", "ultra wispy lashes", "underlash extensions", "voluminous lashes", "wet-look lashes", "whispy cat-eye"], "makeup": ["None", "airbrushed glam", "blurred blush", "bold blush drape", "bold graphic liner", "bronzed glam", "champagne shimmer", "clean girl makeup", "colorful eyeshadow", "crystal tears glam", "cut crease", "dewy skin glam", "editorial makeup", "full beat glam", "glitter glam", "glossy skin", "gold shimmer lids", "halo eye", "high-fashion makeup", "lavender glam", "matte glam", "metallic eyes", "minimal makeup", "monochrome makeup", "natural glam", "no makeup makeup", "nude contour glam", "peach glam", "pink glam", "purple smoky eye", "radiant skin", "rose gold glam", "smoky eye", "soft glam", "soft matte", "sunset eyeshadow", "under-eye sparkle", "vintage glam", "watercolor lids", "wet-look highlight"], "hair_gems": ["None", "aurora crystals", "baroque pearls", "butterfly clips", "champagne rhinestones", "clear crystal pins", "cluster gems", "colored jewels", "crown comb", "diamond dust accents", "emerald stones", "floral hair jewels", "gem-lined part", "gold beads", "gold cuffs", "gold star pins", "hair chain", "halo gems", "heart clips", "holographic gems", "iridescent pearls", "jeweled bobby pins", "jeweled braids", "lavender crystals", "micro rhinestones", "moon clips", "opal gems", "oversized hair jewels", "pearl scatter", "pink crystals", "rainbow gems", "red ruby accents", "rose-gold gems", "sapphire jewels", "silver beads", "starburst pins", "subtle sparkle pins", "tiny diamonds", "velvet bow jewel clip", "vintage brooch clip"], "eyebrows": ["None", "arched brows", "balanced brows", "barely-there brows", "bold brows", "brushed-up brows", "clean sculpted brows", "curved brows", "defined brows", "dramatic brows", "editorial straight brows", "extra dark brows", "feathered brows", "fluffy brows", "glossed brows", "high arch brows", "laminated brows", "long-tail brows", "microbladed effect brows", "natural full brows", "neutral soft brows", "ombre brows", "perfectly carved brows", "powder brows", "rounded brows", "sharp angled brows", "short soft brows", "skinny 90s brows", "sleek brows", "soft arch brows", "soft feathered brows", "soft straight brows", "statement brows", "subtle brows", "thick brows", "thin brows", "trimmed full brows", "ultra defined brows", "wispy brows", "y2k brows"], "nails": ["None", "almond nude nails", "aurora chrome nails", "barbie pink nails", "black gloss nails", "blue glitter nails", "butterfly nails", "champagne shimmer nails", "cherry red nails", "chocolate brown nails", "clear crystal nails", "coffin french tips", "coral gloss nails", "cow print nails", "diamond accent nails", "floral nails", "glazed donut nails", "gold foil nails", "green marble nails", "heart detail nails", "hot pink nails", "lavender chrome nails", "leopard print nails", "long stiletto nails", "marble french tips", "matte nude nails", "metallic silver nails", "milky white nails", "mirror chrome nails", "mix-and-match nails", "mocha swirl nails", "ombre pink nails", "pearl white nails", "press-on glam nails", "red bottom nails", "rhinestone nails", "rose-gold chrome nails", "short square nude nails", "sparkly nude nails", "tortoise shell nails"], "ornate_elements": ["None", "angel wings motif", "baroque frame", "beaded drapery", "butterfly swarm", "candelabra glow", "carved marble details", "ceiling fresco vibe", "chain details", "chandelier sparkle", "crystal curtain", "diamond dust", "floating pearls", "floral appliqué", "gilded trim", "glam ribbons", "gold filigree", "golden halos", "jeweled vines", "lace overlays", "liquid gold accents", "mirror shards", "ornate arches", "ornate crown detail", "pearl drops", "pink smoke swirls", "plush velvet textures", "prism flares", "rhinestone borders", "rose petals", "royal scrollwork", "satin bows", "sequined sparkle", "silver filigree", "sparkle trails", "starbursts", "studded details", "sunburst motif", "swan feathers", "vintage brooch accents"], "accessories": ["None", "anklet", "arm cuff", "body chain", "butterfly necklace", "cat-eye sunglasses", "chandelier earrings", "charm bracelet", "choker necklace", "crossbody bag", "crown headpiece", "designer belt", "designer sunglasses", "diamond studs", "ear cuff", "gemstone ring", "gold bangles", "gold chain necklace", "gold statement earrings", "handbag", "hoop earrings", "lace gloves", "layered necklaces", "luxury watch", "mini purse", "nameplate necklace", "no accessories", "oversized sunglasses", "pearl necklace", "pendant necklace", "phone case accessory", "pink gloves", "ring stack", "satchel bag", "silk gloves", "stacked bracelets", "statement rings", "tennis bracelet", "tiara", "waist chain"], "hair_edges": ["None", "angled swoops", "artistic swirls", "clean natural edges", "crisscross edges", "curled sideburn edges", "defined baby hairs", "dramatic edge art", "feathered swoops", "gelled soft edges", "glam swoops", "glossy sculpted edges", "heart-shaped edges", "lace-framing edges", "laid edges", "long swoop edges", "looped edges", "minimal edges", "natural edges", "no visible hair edges", "petal edges", "precision baby hairs", "retro swoops", "scalloped edges", "sharp side swoops", "side swirl edges", "signature swoops", "sleek edges", "soft baby hairs", "soft loops", "spiral edges", "statement edges", "subtle swoops", "swirled edges", "temple swoops", "tiny curls at hairline", "ultra sculpted edges", "vintage wave edges", "wispy baby hairs", "women-only glam edges"], "skin_tone": ["None", "almond beige", "amber glow", "bronze glow", "butterscotch", "caramel", "chestnut", "cocoa", "cool beige", "deep brown", "deep caramel", "deep ebony", "espresso", "fair neutral", "golden brown", "golden tan", "honey bronze", "ivory", "light beige", "mahogany", "medium beige", "mocha", "neutral brown", "olive", "peach beige", "porcelain", "radiant bronze", "rich melanin", "rose beige", "sable", "sand", "soft tan", "sun-kissed", "tan", "toffee", "walnut", "warm beige", "warm bronze", "warm caramel", "warm chestnut"], "art_style": ["None", "3d doll style", "anime luxe", "baroque editorial", "beauty campaign realism", "bratz-inspired", "cel-shaded glam", "cinematic realism", "clean vector glam", "comic-book luxe", "concept art", "digital painting", "disney-inspired 3d", "dreamcore glamour", "editorial illustration", "ethereal fantasy", "fashion magazine realism", "glossy 3d", "high-fashion realism", "hyper-realistic", "illustrative beauty ad", "kawaii luxe", "luxury poster art", "magazine cover art", "mixed media glam", "modern editorial", "neo-noir glam", "painted realism", "photorealistic", "pop art luxe", "retro fashion illustration", "semi-realistic", "soft airbrush art", "storybook glam", "street-luxury realism", "surreal editorial", "toon realism", "ultra-detailed 3d", "velvet fantasy render", "vintage pinup glam"], "shadow": ["None", "ambient soft shadows", "beauty dish shadows", "bold contour shadows", "clean studio shadows", "deep moody shadows", "diffused soft shadows", "directional side shadows", "dramatic shadows", "editorial shadows", "ethereal glow shadows", "face-framing shadows", "feathered shadows", "floating object shadows", "fog-softened shadows", "golden shadows", "hard-edged shadows", "high-contrast shadows", "inner glow shadows", "long cinematic shadows", "luxury soft shadows", "minimal shadows", "mirror reflection shadows", "moody rim shadows", "natural daylight shadows", "no visible shadows", "pearl-soft shadows", "powdery shadows", "rainy reflective shadows", "sculpted facial shadows", "sharp studio shadows", "silky blended shadows", "smoky shadows", "soft halo shadows", "spotlight shadows", "subtle beauty shadows", "sunset shadows", "underlighting shadows", "velvet matte shadows", "warm wrap shadows"], "camera_angle": ["None", "angled side profile", "back-turned glance", "beauty macro crop", "birds-eye view", "centered vertical shot", "close-up portrait", "dutch angle", "dynamic editorial tilt", "eye-level shot", "fashion runway angle", "floor-level angle", "front-facing", "full-body centered", "glam selfie angle", "head-to-toe straight-on", "hero shot", "high angle", "intimate beauty close-up", "knee-up framing", "left three-quarter view", "long shot", "low angle", "magazine cover crop", "mid-shot", "mirror reflection angle", "over-the-shoulder", "profile view", "right three-quarter view", "seated eye-level", "slight low angle", "slight overhead", "straight-on portrait", "top-down flat lay feel", "torso-up framing", "ultra close-up", "upward hero angle", "waist-up framing", "walking candid angle", "wide cinematic shot"], "lighting": ["None", "ambient glow", "beauty dish lighting", "blue neon lighting", "butter-soft studio light", "candlelit glow", "champagne glow", "cinematic lighting", "clean daylight", "club neon lighting", "colorful led lighting", "diffused beauty light", "dramatic rim light", "editorial flash", "ethereal glow", "flash photography", "front beauty light", "glam studio light", "golden hour light", "halo backlight", "hard flash", "high-gloss studio light", "jewel-toned lighting", "lavender glow", "luxury glam lighting", "magazine lighting", "moody spotlight", "natural window light", "neon pink lighting", "overcast daylight", "pearl-soft light", "professional studio light", "red carpet lighting", "ring light beauty", "side lighting", "silver moonlight", "soft cinematic light", "soft natural light", "sunset warmth", "top lighting"], "facial_expression": ["None", "a confident smirk", "a dreamy stare", "a fierce glare", "a gentle smile", "a glamorous pout", "a joyful laugh", "a main-character gaze", "a playful grin", "a powerful stare", "a serene look", "a silent power expression", "a soft smile", "a sultry gaze", "a teasing smile", "an elegant expression", "an icy stare", "boss energy", "calm confidence", "cool and unbothered", "cute pout", "flirty confidence", "full glam confidence", "joyful confidence", "main-character energy", "menacing calm", "polished confidence", "radiant happiness", "regal poise", "relaxed confidence", "romantic softness", "royal confidence", "sassy expression", "soft confidence", "softly parted lips", "stoic glam", "sweet but fierce", "unapologetic confidence", "warm charisma", "wild confidence"], "facial_features": ["None", "arched nose bridge", "beauty mark above lip", "beauty mark on cheek", "button lips", "button nose", "cat-like eyes", "cheek dimples", "defined cupid bow", "defined jawline", "defined philtrum", "doe eyes", "dramatic cheekbones", "face-framing freckles", "freckles across nose", "full cheeks", "full lips", "glossy lips", "heart-shaped face", "high cheekbones", "hooded eyes", "long lashes", "mole near eye", "mole on chin", "monolid eyes", "oval face shape", "pierced nose", "pointed chin", "rosy cheeks", "round face", "sculpted nose", "sharp features", "soft freckles", "soft jawline", "sparkling eyes", "square jawline", "sun-kissed freckles", "tiny beauty marks", "upturned eyes", "wide almond eyes"], "earrings": ["None", "baroque pearl earrings", "butterfly earrings", "chandelier earrings", "chunky hoops", "crystal chandeliers", "crystal drops", "diamond hoops", "diamond studs", "double hoop earrings", "ear cuffs", "emerald drop earrings", "feather earrings", "gemstone studs", "gold hoops", "gold statement earrings", "heart earrings", "huggie hoops", "icy studs", "long chain earrings", "mixed metal hoops", "moon earrings", "oversized hoops", "pearl drops", "pearl studs", "pink gem earrings", "platinum hoops", "resin statement earrings", "rhinestone hoops", "rose gold studs", "ruby drops", "sapphire studs", "silver hoops", "square gem earrings", "star earrings", "statement studs", "teardrop earrings", "tiny hoops", "triple hoops", "vintage clip-ons"]};
+    const presets = ["Airport CEO Glam", "All Black Bombshell", "Beach Bronze Beauty", "Blue Hour Baddie", "Champagne Nights", "City Rooftop Muse", "Clean Girl Luxe", "Club Neon Queen", "Couture Runway Doll", "Crowned in Crystals", "Editorial Boss Babe", "Emerald Envy", "Golden Hour Goddess", "Holiday Glam Sparkle", "Icy Princess Energy", "Lavender Dream Luxe", "Marble Lobby Muse", "Midnight Penthouse", "Old Hollywood Doll", "Pink Velvet Fantasy", "Poolside Rich Auntie", "Red Carpet Heat", "Rose Gold Romance", "Soft Soft Life", "Street Luxe Siren"];
+
+    const categoryMeta = {
+      ethnicity: { label: 'Ethnicity', placeholder: 'e.g., Afro-Caribbean and Colombian', group: 'identity-beauty-grid' },
+      skin_tone: { label: 'Skin Tone', placeholder: 'e.g., radiant deep bronze', group: 'identity-beauty-grid' },
+      eye_color: { label: 'Eye Color', placeholder: 'e.g., warm hazel with gold flecks', group: 'identity-beauty-grid' },
+      hairstyle: { label: 'Hairstyle', placeholder: 'e.g., waist-length waves with volume', group: 'identity-beauty-grid' },
+      hair_color: { label: 'Hair Color', placeholder: 'e.g., espresso brown with caramel ribbons', group: 'identity-beauty-grid' },
+      lashes: { label: 'Lashes', placeholder: 'e.g., wispy cat-eye set', group: 'identity-beauty-grid' },
+      makeup: { label: 'Makeup', placeholder: 'e.g., glossy soft glam', group: 'identity-beauty-grid' },
+      hair_gems: { label: 'Hair Gems', placeholder: 'e.g., pearl scatter with tiny crystals', group: 'identity-beauty-grid' },
+      eyebrows: { label: 'Eyebrows', placeholder: 'e.g., fluffy defined brows', group: 'identity-beauty-grid' },
+      nails: { label: 'Nails', placeholder: 'e.g., rose-gold chrome coffin nails', group: 'identity-beauty-grid' },
+      hair_edges: { label: 'Hair Edges (Women Only)', placeholder: 'e.g., soft swoops at the temples', group: 'identity-beauty-grid' },
+      facial_expression: { label: 'Facial Expression', placeholder: 'e.g., cool and unbothered with a slight smirk', group: 'identity-beauty-grid' },
+      facial_features: { label: 'Facial Features', placeholder: 'e.g., freckles across nose and beauty mark', group: 'identity-beauty-grid' },
+      earrings: { label: 'Earrings', placeholder: 'e.g., oversized crystal hoops', group: 'identity-beauty-grid' },
+
+      outfit_style: { label: 'Outfit Style', placeholder: 'e.g., luxe streetwear with a clubwear edge', group: 'fashion-styling-grid' },
+      top_style: { label: 'Top Style', placeholder: 'e.g., rhinestone corset top', group: 'fashion-styling-grid' },
+      bottom_style: { label: 'Bottom Style', placeholder: 'e.g., stacked pants with a glossy finish', group: 'fashion-styling-grid' },
+
+      shoes: { label: 'Shoes', placeholder: 'e.g., clear crystal stilettos', group: 'fashion-styling-grid' },
+      ornate_elements: { label: 'Ornate Elements', placeholder: 'e.g., gold filigree and floating pearls', group: 'fashion-styling-grid' },
+      accessories: { label: 'Accessories', placeholder: 'e.g., body chain and mini purse', group: 'fashion-styling-grid' },
+      color_palette: { label: 'Color Palette', placeholder: 'e.g., royal blue and gold', group: 'fashion-styling-grid' },
+      art_style: { label: 'Art Style', placeholder: 'e.g., glossy 3D editorial realism', group: 'fashion-styling-grid' },
+
+      locations: { label: 'Location', placeholder: 'e.g., luxury penthouse with a skyline view', group: 'scene-atmosphere-grid' },
+      backgrounds: { label: 'Background', placeholder: 'e.g., rose-gold shimmer wall', group: 'scene-atmosphere-grid' },
+      fog: { label: 'Fog', placeholder: 'e.g., soft pink haze around the floor', group: 'scene-atmosphere-grid' },
+      weather: { label: 'Weather', placeholder: 'e.g., light rain with neon reflections', group: 'scene-atmosphere-grid' },
+      time_of_day: { label: 'Time of Day', placeholder: 'e.g., blue hour just after sunset', group: 'scene-atmosphere-grid' },
+      seasons: { label: 'Season', placeholder: 'e.g., blooming spring luxury', group: 'scene-atmosphere-grid' },
+
+      shadow: { label: 'Shadow', placeholder: 'e.g., soft halo shadows under the chin', group: 'technical-controls-grid' },
+      camera_angle: { label: 'Camera Angle', placeholder: 'e.g., low-angle hero shot', group: 'technical-controls-grid' },
+      lighting: { label: 'Lighting', placeholder: 'e.g., warm honey glow with glam studio light', group: 'technical-controls-grid' }
+    };
+
+    const lockedFields = new Set();
+
+    const presetValues = {"Airport CEO Glam": {"locations": "airport lounge", "backgrounds": "minimal studio", "weather": "clear skies", "time_of_day": "morning", "seasons": "all-season glam", "color_palette": "black and gold", "ethnicity": "african american", "hair_color": "jet black", "eye_color": "dark brown", "hairstyle": "sleek low bun", "shoes": "pointed heels", "lashes": "soft glam lashes", "makeup": "clean girl makeup", "hair_gems": "none", "eyebrows": "clean sculpted brows", "nails": "milky white nails", "ornate_elements": "gold filigree", "accessories": "luxury watch", "hair_edges": "laid edges", "skin_tone": "deep brown", "art_style": "high-fashion realism", "shadow": "luxury soft shadows", "camera_angle": "waist-up framing", "lighting": "professional studio light", "facial_expression": "boss energy", "facial_features": "high cheekbones", "earrings": "diamond studs", "fog": "no fog"}, "All Black Bombshell": {"locations": "nightclub entrance", "backgrounds": "deep black void", "weather": "clear skies", "time_of_day": "late night", "seasons": "all-season glam", "color_palette": "black and gold", "ethnicity": "afro-latina", "hair_color": "blue black", "eye_color": "caramel", "hairstyle": "long silky straight", "shoes": "gold stilettos", "lashes": "dramatic lashes", "makeup": "full beat glam", "hair_gems": "micro rhinestones", "eyebrows": "arched brows", "nails": "black gloss nails", "ornate_elements": "diamond dust", "accessories": "body chain", "hair_edges": "ultra sculpted edges", "skin_tone": "rich melanin", "art_style": "hyper-realistic", "shadow": "deep moody shadows", "camera_angle": "full-body centered", "lighting": "luxury glam lighting", "facial_expression": "a fierce glare", "facial_features": "beauty mark above lip", "earrings": "gold statement earrings", "fog": "soft smoky air"}, "Beach Bronze Beauty": {"locations": "beach boardwalk", "backgrounds": "ombre sunset", "weather": "soft breeze", "time_of_day": "sunset", "seasons": "coastal summer", "color_palette": "bronze and cream", "ethnicity": "brazilian", "hair_color": "caramel brown", "eye_color": "honey", "hairstyle": "soft beach waves", "shoes": "strappy sandals", "lashes": "fluttery lashes", "makeup": "bronzed glam", "hair_gems": "gold star pins", "eyebrows": "soft arch brows", "nails": "glazed donut nails", "ornate_elements": "rose petals", "accessories": "anklet", "hair_edges": "soft baby hairs", "skin_tone": "bronze glow", "art_style": "beauty campaign realism", "shadow": "sunset shadows", "camera_angle": "head-to-toe straight-on", "lighting": "golden hour light", "facial_expression": "a soft smile", "facial_features": "sun-kissed freckles", "earrings": "gold hoops", "fog": "no fog"}, "Blue Hour Baddie": {"locations": "city rooftop", "backgrounds": "midnight blue glow", "weather": "windy", "time_of_day": "blue hour", "seasons": "summer nights", "color_palette": "royal blue and gold", "ethnicity": "haitian", "hair_color": "jet black", "eye_color": "topaz", "hairstyle": "high ponytail", "shoes": "metallic stilettos", "lashes": "cat-eye lashes", "makeup": "bold graphic liner", "hair_gems": "sapphire jewels", "eyebrows": "defined brows", "nails": "blue glitter nails", "ornate_elements": "sparkle trails", "accessories": "designer sunglasses", "hair_edges": "signature swoops", "skin_tone": "deep caramel", "art_style": "street-luxury realism", "shadow": "editorial shadows", "camera_angle": "slight low angle", "lighting": "blue neon lighting", "facial_expression": "polished confidence", "facial_features": "defined jawline", "earrings": "sapphire studs", "fog": "blue club fog"}, "Champagne Nights": {"locations": "luxury casino", "backgrounds": "champagne shimmer", "weather": "clear skies", "time_of_day": "late night", "seasons": "holiday winter", "color_palette": "champagne and ivory", "ethnicity": "mixed heritage", "hair_color": "golden blonde", "eye_color": "golden hazel", "hairstyle": "finger waves", "shoes": "crystal heels", "lashes": "full volume lashes", "makeup": "champagne shimmer", "hair_gems": "clear crystal pins", "eyebrows": "laminated brows", "nails": "champagne shimmer nails", "ornate_elements": "chandelier sparkle", "accessories": "handbag", "hair_edges": "no visible hair edges", "skin_tone": "warm beige", "art_style": "modern editorial", "shadow": "pearl-soft shadows", "camera_angle": "magazine cover crop", "lighting": "champagne glow", "facial_expression": "regal poise", "facial_features": "high cheekbones", "earrings": "crystal chandeliers", "fog": "barely-there mist"}, "City Rooftop Muse": {"locations": "city rooftop", "backgrounds": "city skyline", "weather": "clear skies", "time_of_day": "twilight", "seasons": "all-season glam", "color_palette": "rose gold and blush", "ethnicity": "dominican", "hair_color": "rose gold", "eye_color": "warm brown", "hairstyle": "body wave sew-in", "shoes": "strappy sandals", "lashes": "soft curl lashes", "makeup": "soft glam", "hair_gems": "rose-gold gems", "eyebrows": "feathered brows", "nails": "rose-gold chrome nails", "ornate_elements": "floating pearls", "accessories": "mini purse", "hair_edges": "subtle swoops", "skin_tone": "amber glow", "art_style": "glossy 3d", "shadow": "ambient soft shadows", "camera_angle": "eye-level shot", "lighting": "soft cinematic light", "facial_expression": "main-character energy", "facial_features": "defined cupid bow", "earrings": "rose gold studs", "fog": "light smoke veil"}, "Clean Girl Luxe": {"locations": "beauty studio", "backgrounds": "off-white cream", "weather": "clear skies", "time_of_day": "mid-morning", "seasons": "all-season glam", "color_palette": "ivory and pearl", "ethnicity": "asian american", "hair_color": "soft black", "eye_color": "deep hazel", "hairstyle": "sleek low bun", "shoes": "nude pumps", "lashes": "natural lashes", "makeup": "no makeup makeup", "hair_gems": "none", "eyebrows": "brushed-up brows", "nails": "short square nude nails", "ornate_elements": "pearl drops", "accessories": "pearl necklace", "hair_edges": "clean natural edges", "skin_tone": "light beige", "art_style": "photorealistic", "shadow": "clean studio shadows", "camera_angle": "close-up portrait", "lighting": "clean daylight", "facial_expression": "a serene look", "facial_features": "oval face shape", "earrings": "pearl studs", "fog": "no fog"}, "Club Neon Queen": {"locations": "nightclub entrance", "backgrounds": "neon tunnel", "weather": "electric storm", "time_of_day": "neon midnight", "seasons": "summer nights", "color_palette": "fuchsia and violet", "ethnicity": "jamaican", "hair_color": "midnight blue", "eye_color": "emerald", "hairstyle": "wet and wavy", "shoes": "thigh-high boots", "lashes": "spiky editorial lashes", "makeup": "colorful eyeshadow", "hair_gems": "rainbow gems", "eyebrows": "sharp angled brows", "nails": "mirror chrome nails", "ornate_elements": "prism flares", "accessories": "cat-eye sunglasses", "hair_edges": "dramatic edge art", "skin_tone": "deep ebony", "art_style": "neo-noir glam", "shadow": "high-contrast shadows", "camera_angle": "dutch angle", "lighting": "club neon lighting", "facial_expression": "wild confidence", "facial_features": "sharp features", "earrings": "rhinestone hoops", "fog": "electric neon fog"}, "Couture Runway Doll": {"locations": "fashion runway", "backgrounds": "editorial beige set", "weather": "clear skies", "time_of_day": "afternoon", "seasons": "all-season glam", "color_palette": "pearl and platinum", "ethnicity": "south asian", "hair_color": "espresso brown", "eye_color": "hazel", "hairstyle": "sleek bob", "shoes": "slingback heels", "lashes": "hybrid lash set", "makeup": "high-fashion makeup", "hair_gems": "crown comb", "eyebrows": "editorial straight brows", "nails": "coffin french tips", "ornate_elements": "baroque frame", "accessories": "statement rings", "hair_edges": "minimal edges", "skin_tone": "almond beige", "art_style": "fashion magazine realism", "shadow": "sculpted facial shadows", "camera_angle": "fashion runway angle", "lighting": "editorial flash", "facial_expression": "an elegant expression", "facial_features": "dramatic cheekbones", "earrings": "teardrop earrings", "fog": "no fog"}, "Crowned in Crystals": {"locations": "grand staircase", "backgrounds": "crystal curtain", "weather": "clear skies", "time_of_day": "early evening", "seasons": "festive winter", "color_palette": "ice blue and silver", "ethnicity": "nigerian", "hair_color": "jet black", "eye_color": "ice blue", "hairstyle": "updo with tendrils", "shoes": "crystal heels", "lashes": "dramatic lashes", "makeup": "glitter glam", "hair_gems": "halo gems", "eyebrows": "ultra defined brows", "nails": "clear crystal nails", "ornate_elements": "golden halos", "accessories": "crown headpiece", "hair_edges": "glossy sculpted edges", "skin_tone": "walnut", "art_style": "velvet fantasy render", "shadow": "spotlight shadows", "camera_angle": "upward hero angle", "lighting": "ethereal glow", "facial_expression": "royal confidence", "facial_features": "heart-shaped face", "earrings": "crystal drops", "fog": "crystal mist"}, "Editorial Boss Babe": {"locations": "luxury office", "backgrounds": "marble texture", "weather": "clear skies", "time_of_day": "midday", "seasons": "all-season glam", "color_palette": "navy and gold", "ethnicity": "african american", "hair_color": "dark brown", "eye_color": "cocoa", "hairstyle": "silk press", "shoes": "designer loafers", "lashes": "classic extension set", "makeup": "airbrushed glam", "hair_gems": "none", "eyebrows": "perfectly carved brows", "nails": "almond nude nails", "ornate_elements": "ornate arches", "accessories": "designer belt", "hair_edges": "subtle swoops", "skin_tone": "cocoa", "art_style": "cinematic realism", "shadow": "natural daylight shadows", "camera_angle": "seated eye-level", "lighting": "natural window light", "facial_expression": "a fierce glare", "facial_features": "square jawline", "earrings": "tiny hoops", "fog": "no fog"}, "Emerald Envy": {"locations": "jewelry showroom", "backgrounds": "emerald marble", "weather": "clear skies", "time_of_day": "afternoon", "seasons": "holiday winter", "color_palette": "emerald and gold", "ethnicity": "ethiopian", "hair_color": "natural black", "eye_color": "emerald", "hairstyle": "french curl braids", "shoes": "gold stilettos", "lashes": "voluminous lashes", "makeup": "gold shimmer lids", "hair_gems": "emerald stones", "eyebrows": "defined brows", "nails": "green marble nails", "ornate_elements": "jeweled vines", "accessories": "gemstone ring", "hair_edges": "laid edges", "skin_tone": "espresso", "art_style": "high-fashion realism", "shadow": "golden shadows", "camera_angle": "right three-quarter view", "lighting": "jewel-toned lighting", "facial_expression": "cool and unbothered", "facial_features": "sculpted nose", "earrings": "emerald drop earrings", "fog": "no fog"}, "Golden Hour Goddess": {"locations": "courtyard garden", "backgrounds": "golden drapery", "weather": "golden sunshine", "time_of_day": "golden hour", "seasons": "peak spring", "color_palette": "gold and white", "ethnicity": "somali", "hair_color": "warm brunette", "eye_color": "topaz", "hairstyle": "goddess braids", "shoes": "gladiator heels", "lashes": "soft glam lashes", "makeup": "radiant skin", "hair_gems": "gold beads", "eyebrows": "soft feathered brows", "nails": "gold foil nails", "ornate_elements": "sunburst motif", "accessories": "gold bangles", "hair_edges": "women-only glam edges", "skin_tone": "honey bronze", "art_style": "disney-inspired 3d", "shadow": "warm wrap shadows", "camera_angle": "hero shot", "lighting": "golden hour light", "facial_expression": "radiant happiness", "facial_features": "wide almond eyes", "earrings": "gold hoops", "fog": "sunlit dust haze"}, "Holiday Glam Sparkle": {"locations": "boutique hotel", "backgrounds": "diamond sparkle wall", "weather": "light snow", "time_of_day": "candlelit night", "seasons": "holiday winter", "color_palette": "red and black", "ethnicity": "puerto rican", "hair_color": "burgundy", "eye_color": "warm brown", "hairstyle": "loose curls", "shoes": "velvet pumps", "lashes": "sultry lashes", "makeup": "vintage glam", "hair_gems": "red ruby accents", "eyebrows": "arched brows", "nails": "cherry red nails", "ornate_elements": "sequined sparkle", "accessories": "stacked bracelets", "hair_edges": "soft loops", "skin_tone": "warm bronze", "art_style": "vintage pinup glam", "shadow": "velvet matte shadows", "camera_angle": "mid-shot", "lighting": "candlelit glow", "facial_expression": "warm charisma", "facial_features": "rosy cheeks", "earrings": "ruby drops", "fog": "champagne fog"}, "Icy Princess Energy": {"locations": "mirror room", "backgrounds": "platinum gradient", "weather": "winter frost", "time_of_day": "silver dawn", "seasons": "snowy winter", "color_palette": "platinum and white", "ethnicity": "korean", "hair_color": "icy platinum", "eye_color": "gray", "hairstyle": "blunt bob", "shoes": "silver stilettos", "lashes": "piecey lashes", "makeup": "lavender glam", "hair_gems": "opal gems", "eyebrows": "soft straight brows", "nails": "pearl white nails", "ornate_elements": "mirror shards", "accessories": "tiara", "hair_edges": "no visible hair edges", "skin_tone": "fair neutral", "art_style": "toon realism", "shadow": "silky blended shadows", "camera_angle": "straight-on portrait", "lighting": "silver moonlight", "facial_expression": "an icy stare", "facial_features": "button nose", "earrings": "silver hoops", "fog": "silvery haze"}, "Lavender Dream Luxe": {"locations": "dreamy cloud set", "backgrounds": "lavender haze", "weather": "misty", "time_of_day": "sunrise", "seasons": "romantic spring", "color_palette": "lavender and blush", "ethnicity": "middle eastern", "hair_color": "lavender", "eye_color": "violet", "hairstyle": "half-up half-down", "shoes": "ballet heels", "lashes": "doll lashes", "makeup": "watercolor lids", "hair_gems": "lavender crystals", "eyebrows": "rounded brows", "nails": "lavender chrome nails", "ornate_elements": "angel wings motif", "accessories": "butterfly necklace", "hair_edges": "soft baby hairs", "skin_tone": "rose beige", "art_style": "dreamcore glamour", "shadow": "ethereal glow shadows", "camera_angle": "angled side profile", "lighting": "lavender glow", "facial_expression": "a dreamy stare", "facial_features": "doe eyes", "earrings": "butterfly earrings", "fog": "lavender mist"}, "Marble Lobby Muse": {"locations": "marble lobby", "backgrounds": "marble texture", "weather": "clear skies", "time_of_day": "midday", "seasons": "all-season glam", "color_palette": "caramel and nude", "ethnicity": "venezuelan", "hair_color": "chocolate brown", "eye_color": "hazel", "hairstyle": "rounded afro", "shoes": "open-toe heels", "lashes": "individual lashes", "makeup": "nude contour glam", "hair_gems": "none", "eyebrows": "natural full brows", "nails": "mocha swirl nails", "ornate_elements": "carved marble details", "accessories": "satchel bag", "hair_edges": "natural edges", "skin_tone": "caramel", "art_style": "modern editorial", "shadow": "natural daylight shadows", "camera_angle": "left three-quarter view", "lighting": "professional studio light", "facial_expression": "soft confidence", "facial_features": "full lips", "earrings": "gemstone studs", "fog": "no fog"}, "Midnight Penthouse": {"locations": "high-rise penthouse", "backgrounds": "deep black void", "weather": "clear skies", "time_of_day": "midnight", "seasons": "all-season glam", "color_palette": "silver and black", "ethnicity": "colombian", "hair_color": "blue black", "eye_color": "bronze", "hairstyle": "body wave sew-in", "shoes": "transparent heels", "lashes": "wet-look lashes", "makeup": "metallic eyes", "hair_gems": "tiny diamonds", "eyebrows": "powder brows", "nails": "metallic silver nails", "ornate_elements": "liquid gold accents", "accessories": "crossbody bag", "hair_edges": "precision baby hairs", "skin_tone": "toffee", "art_style": "luxury poster art", "shadow": "moody rim shadows", "camera_angle": "low angle", "lighting": "moody spotlight", "facial_expression": "a silent power expression", "facial_features": "defined philtrum", "earrings": "diamond hoops", "fog": "midnight haze"}, "Old Hollywood Doll": {"locations": "old hollywood set", "backgrounds": "pink velvet curtain", "weather": "clear skies", "time_of_day": "early evening", "seasons": "festive winter", "color_palette": "blush and champagne", "ethnicity": "armenian", "hair_color": "chestnut brown", "eye_color": "olive green", "hairstyle": "finger waves", "shoes": "satin pumps", "lashes": "feathered lashes", "makeup": "vintage glam", "hair_gems": "vintage brooch clip", "eyebrows": "high arch brows", "nails": "cherry red nails", "ornate_elements": "candelabra glow", "accessories": "silk gloves", "hair_edges": "vintage wave edges", "skin_tone": "warm chestnut", "art_style": "retro fashion illustration", "shadow": "soft halo shadows", "camera_angle": "magazine cover crop", "lighting": "red carpet lighting", "facial_expression": "a glamorous pout", "facial_features": "mole near eye", "earrings": "baroque pearl earrings", "fog": "barely-there mist"}, "Pink Velvet Fantasy": {"locations": "glam room", "backgrounds": "pink velvet curtain", "weather": "clear skies", "time_of_day": "pink dusk", "seasons": "romantic spring", "color_palette": "pink and gold", "ethnicity": "afro-brazilian", "hair_color": "pastel pink", "eye_color": "rose-brown", "hairstyle": "space buns", "shoes": "platform sandals", "lashes": "rounded doll lashes", "makeup": "pink glam", "hair_gems": "pink crystals", "eyebrows": "soft arch brows", "nails": "barbie pink nails", "ornate_elements": "satin bows", "accessories": "mini purse", "hair_edges": "heart-shaped edges", "skin_tone": "honey bronze", "art_style": "kawaii luxe", "shadow": "powdery shadows", "camera_angle": "centered vertical shot", "lighting": "neon pink lighting", "facial_expression": "cute pout", "facial_features": "full cheeks", "earrings": "heart earrings", "fog": "pink mist"}, "Poolside Rich Auntie": {"locations": "miami poolside", "backgrounds": "pearl sheen", "weather": "sunny", "time_of_day": "late afternoon", "seasons": "peak summer", "color_palette": "peach and gold", "ethnicity": "trinidadian", "hair_color": "honey blonde", "eye_color": "caramel", "hairstyle": "messy bun", "shoes": "wedges", "lashes": "soft glam lashes", "makeup": "dewy skin glam", "hair_gems": "none", "eyebrows": "balanced brows", "nails": "coral gloss nails", "ornate_elements": "floating pearls", "accessories": "oversized sunglasses", "hair_edges": "soft baby hairs", "skin_tone": "golden tan", "art_style": "glossy 3d", "shadow": "warm wrap shadows", "camera_angle": "walking candid angle", "lighting": "sunset warmth", "facial_expression": "relaxed confidence", "facial_features": "cheek dimples", "earrings": "gold hoops", "fog": "no fog"}, "Red Carpet Heat": {"locations": "editorial stage", "backgrounds": "diamond sparkle wall", "weather": "clear skies", "time_of_day": "early evening", "seasons": "all-season glam", "color_palette": "crimson and black", "ethnicity": "mexican", "hair_color": "mahogany", "eye_color": "dark brown", "hairstyle": "side swoop", "shoes": "red-bottom heels", "lashes": "bold glam lashes", "makeup": "full beat glam", "hair_gems": "clear crystal pins", "eyebrows": "statement brows", "nails": "cherry red nails", "ornate_elements": "rhinestone borders", "accessories": "handbag", "hair_edges": "sharp side swoops", "skin_tone": "warm caramel", "art_style": "photorealistic", "shadow": "hard-edged shadows", "camera_angle": "head-to-toe straight-on", "lighting": "flash photography", "facial_expression": "unapologetic confidence", "facial_features": "defined jawline", "earrings": "crystal drops", "fog": "spotlit fog"}, "Rose Gold Romance": {"locations": "flower wall", "backgrounds": "rose-gold shimmer", "weather": "clear skies", "time_of_day": "sunset", "seasons": "floral spring", "color_palette": "rose gold and blush", "ethnicity": "persian", "hair_color": "rose gold", "eye_color": "hazel", "hairstyle": "loose curls", "shoes": "heeled mules", "lashes": "ultra wispy lashes", "makeup": "rose gold glam", "hair_gems": "rose-gold gems", "eyebrows": "soft feathered brows", "nails": "ombre pink nails", "ornate_elements": "rose petals", "accessories": "pendant necklace", "hair_edges": "petal edges", "skin_tone": "soft tan", "art_style": "storybook glam", "shadow": "face-framing shadows", "camera_angle": "torso-up framing", "lighting": "champagne glow", "facial_expression": "romantic softness", "facial_features": "beauty mark on cheek", "earrings": "rose gold studs", "fog": "rose mist"}, "Soft Soft Life": {"locations": "luxury bedroom", "backgrounds": "soft blush gradient", "weather": "clear skies", "time_of_day": "sunlit morning", "seasons": "mild winter", "color_palette": "nude and mocha", "ethnicity": "turkish", "hair_color": "espresso brown", "eye_color": "warm brown", "hairstyle": "silk press", "shoes": "barefoot glam", "lashes": "airy lashes", "makeup": "soft glam", "hair_gems": "none", "eyebrows": "fluffy brows", "nails": "sparkly nude nails", "ornate_elements": "plush velvet textures", "accessories": "pearl necklace", "hair_edges": "subtle swoops", "skin_tone": "warm beige", "art_style": "painted realism", "shadow": "diffused soft shadows", "camera_angle": "intimate beauty close-up", "lighting": "soft natural light", "facial_expression": "a gentle smile", "facial_features": "soft jawline", "earrings": "pearl drops", "fog": "barely-there mist"}, "Street Luxe Siren": {"locations": "parking garage", "backgrounds": "smoky gray fade", "weather": "rain shower", "time_of_day": "after dark", "seasons": "all-season glam", "color_palette": "silver and black", "ethnicity": "afro-caribbean", "hair_color": "jet black", "eye_color": "amber", "hairstyle": "knotless braids", "shoes": "combat boots", "lashes": "siren lashes", "makeup": "smoky eye", "hair_gems": "silver beads", "eyebrows": "dramatic brows", "nails": "mirror chrome nails", "ornate_elements": "chain details", "accessories": "designer sunglasses", "hair_edges": "statement edges", "skin_tone": "sable", "art_style": "street-luxury realism", "shadow": "rainy reflective shadows", "camera_angle": "dynamic editorial tilt", "lighting": "dramatic rim light", "facial_expression": "a teasing smile", "facial_features": "freckles across nose", "earrings": "ear cuffs", "fog": "creeping floor fog"}};
+
+    function createField(key) {
+      const meta = categoryMeta[key];
+      const wrapper = document.createElement('div');
+      wrapper.className = 'field-wrapper';
+      wrapper.dataset.fieldKey = key;
+      wrapper.innerHTML = `
+        <div class="flex items-center justify-between gap-3 mb-2">
+          <label for="${key}" class="block text-sm font-medium text-gray-100">${meta.label}</label>
+          <button type="button" class="lock-btn" data-lock-key="${key}" aria-pressed="false">🔓 Lock</button>
+        </div>
+        <div>
+          <select id="${key}" multiple size="6" class="custom-select multi-select-box w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white/90 text-gray-800">
+            ${categoryOptions[key].map(option => `<option value="${option}">${option}</option>`).join('')}
+          </select>
+          <p class="field-hint">Hold Ctrl or Command to pick multiple options.</p>
+        </div>
+        <div class="mt-3">
+          <label for="${key}_custom" class="block text-sm font-medium text-gray-100 mb-2">Custom ${meta.label}</label>
+          <input type="text" id="${key}_custom" placeholder="${meta.placeholder}" class="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white/90 text-gray-800">
+        </div>`;
+      return wrapper;
+    }
+
+    function updateLockButton(key) {
+      const btn = document.querySelector(`[data-lock-key="${key}"]`);
+      if (!btn) return;
+      const isLocked = lockedFields.has(key);
+      btn.textContent = isLocked ? '🔒 Locked' : '🔓 Lock';
+      btn.setAttribute('aria-pressed', isLocked ? 'true' : 'false');
+      btn.classList.toggle('locked', isLocked);
+    }
+
+    function toggleLock(key) {
+      if (lockedFields.has(key)) {
+        lockedFields.delete(key);
+      } else {
+        lockedFields.add(key);
+      }
+      updateLockButton(key);
+      generatePrompt();
+    }
+
+    function buildForm() {
+      Object.keys(categoryMeta).forEach(key => {
+        document.getElementById(categoryMeta[key].group).appendChild(createField(key));
+      });
+      const presetWrap = document.getElementById('preset-chips');
+      presets.forEach(name => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preset-chip bg-white border border-purple-200 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold';
+        btn.textContent = name;
+        btn.addEventListener('click', () => applyPreset(name));
+        presetWrap.appendChild(btn);
+      });
+    }
+
+    function setFieldValue(key, value) {
+      const select = document.getElementById(key);
+      if (!select) return;
+      Array.from(select.options).forEach(opt => opt.selected = false);
+      const values = Array.isArray(value) ? value : [String(value || 'None')];
+      values.forEach(item => {
+        const normalized = String(item || 'None').toLowerCase();
+        const match = Array.from(select.options).find(opt => opt.value.toLowerCase() === normalized);
+        if (match) match.selected = true;
+      });
+      if (!Array.from(select.selectedOptions).length) {
+        const noneOpt = Array.from(select.options).find(opt => opt.value === 'None');
+        if (noneOpt) noneOpt.selected = true;
+      }
+      const custom = document.getElementById(`${key}_custom`);
+      if (custom) custom.value = '';
+    }
+
+    function getSelectedValues(key) {
+      const select = document.getElementById(key);
+      if (!select) return [];
+      const selected = Array.from(select.selectedOptions).map(opt => opt.value).filter(Boolean);
+      const withoutNone = selected.filter(v => v !== 'None');
+      return withoutNone.length ? withoutNone : [];
+    }
+
+    function applyPreset(name) {
+      const values = presetValues[name] || {};
+      Object.keys(categoryMeta).forEach(key => { if (!lockedFields.has(key)) setFieldValue(key, values[key] || 'None'); });
+      renderPromptHistory();
+      generatePrompt();
+    }
+
+    function resolveValue(key) {
+      const selectedValues = getSelectedValues(key);
+      const customValue = document.getElementById(`${key}_custom`)?.value.trim() || '';
+      if (customValue) return customValue;
+      return selectedValues.join(', ');
+    }
+
+    const strictPrimaryFields = new Set([
+      'ethnicity', 'skin_tone', 'eye_color', 'hairstyle', 'outfit_style', 'top_style', 'bottom_style',
+      'shoes', 'locations', 'backgrounds', 'fog', 'weather', 'time_of_day', 'seasons',
+      'shadow', 'camera_angle', 'lighting'
+    ]);
+
+    function getResolvedSelections(key) {
+      const customValue = document.getElementById(`${key}_custom`)?.value.trim() || '';
+      if (customValue) return [customValue];
+      return getSelectedValues(key);
+    }
+
+    function combineList(values, conjunction = 'and') {
+      const cleaned = values.filter(Boolean);
+      if (!cleaned.length) return '';
+      if (cleaned.length === 1) return cleaned[0];
+      if (cleaned.length === 2) return `${cleaned[0]} ${conjunction} ${cleaned[1]}`;
+      return `${cleaned.slice(0, -1).join(', ')}, ${conjunction} ${cleaned[cleaned.length - 1]}`;
+    }
+
+    function formatFieldValue(key) {
+      const values = getResolvedSelections(key).filter(Boolean);
+      if (!values.length) return '';
+      if (strictPrimaryFields.has(key)) return values[0];
+
+      switch (key) {
+        case 'hair_color':
+          return values.length === 1 ? values[0] : `${values[0]} with ${values[1]} accents`;
+        case 'makeup':
+          return values.length === 1 ? values[0] : `${values[0]} with ${values[1]} accents`;
+        case 'hair_gems':
+          return combineList(values.slice(0, 2));
+        case 'eyebrows':
+          return values.length === 1 ? values[0] : `${values[0]} with ${values[1]} shaping`;
+        case 'nails':
+          return combineList(values.slice(0, 2));
+        case 'hair_edges':
+          return values.length === 1 ? values[0] : values[1];
+        case 'facial_expression':
+          return values[0];
+        case 'facial_features':
+          return combineList(values.slice(0, 2));
+        case 'earrings':
+          return values[0];
+        case 'ornate_elements':
+          return combineList(values.slice(0, 2));
+        case 'accessories':
+          return values[0];
+        case 'color_palette':
+          return values.length === 1 ? values[0] : `${values[0]} with ${values[1]} accents`;
+        case 'art_style':
+          return values.length === 1 ? values[0] : `${values[0]} with ${values[1]} influence`;
+        case 'lashes':
+          return values[0];
+        default:
+          return combineList(values.slice(0, 2));
+      }
+    }
+
+    function getPrimaryValue(key) {
+      const customValue = document.getElementById(`${key}_custom`)?.value.trim() || '';
+      if (customValue) return customValue;
+      const selectedValues = getSelectedValues(key);
+      return selectedValues[0] || '';
+    }
+
+    const recentRandomSignatures = [];
+    const maxRecentRandomSignatures = 500;
+    const fieldCycleState = {};
+
+    function shuffleArray(values) {
+      const arr = [...values];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function getFieldCycleState(key, options) {
+      if (!fieldCycleState[key]) fieldCycleState[key] = { bag: [], lastUsed: [] };
+      const state = fieldCycleState[key];
+      const normalizedOptions = options.filter(Boolean).filter(v => v !== 'None');
+      state.lastUsed = state.lastUsed.filter(v => normalizedOptions.includes(v));
+      if (!state.bag.length) {
+        const leastRecent = normalizedOptions.filter(v => !state.lastUsed.includes(v));
+        state.bag = shuffleArray(leastRecent.length ? leastRecent : normalizedOptions);
+        state.lastUsed = [];
+      }
+      return state;
+    }
+
+    function getNextCyclingValues(key, options, count) {
+      const state = getFieldCycleState(key, options);
+      const picks = [];
+      while (picks.length < count && options.length) {
+        if (!state.bag.length) {
+          const normalizedOptions = options.filter(Boolean).filter(v => v !== 'None');
+          const leastRecent = normalizedOptions.filter(v => !state.lastUsed.includes(v));
+          state.bag = shuffleArray(leastRecent.length ? leastRecent : normalizedOptions);
+          if (!leastRecent.length) state.lastUsed = [];
+        }
+        const nextValue = state.bag.shift();
+        if (!nextValue || picks.includes(nextValue)) continue;
+        picks.push(nextValue);
+        state.lastUsed.push(nextValue);
+        if (state.lastUsed.length > options.length) state.lastUsed.shift();
+      }
+      return picks;
+    }
+
+    function pickRandomDifferent(options, exclude = '', fallback = '') {
+      const pool = options.filter(Boolean).filter(v => v !== 'None' && v !== exclude);
+      if (!pool.length) return fallback || exclude || '';
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function sentencePart(label, value) {
+      return value ? `${label}: ${value}` : '';
+    }
+
+    function generateCustomGPTInstructions() {
+      const categoryKeys = Object.keys(categoryMeta);
+      const groupedCategories = {
+        'Identity & Beauty': [],
+        'Fashion & Styling': [],
+        'Scene & Atmosphere': [],
+        'Technical Controls': []
+      };
+      const groupLookup = {
+        'identity-beauty-grid': 'Identity & Beauty',
+        'fashion-styling-grid': 'Fashion & Styling',
+        'scene-atmosphere-grid': 'Scene & Atmosphere',
+        'technical-controls-grid': 'Technical Controls'
+      };
+
+      categoryKeys.forEach(key => {
+        const meta = categoryMeta[key];
+        groupedCategories[groupLookup[meta.group]].push(meta.label);
+      });
+
+      const groupedSummary = Object.entries(groupedCategories)
+        .map(([group, labels]) => `- ${group}: ${labels.join(', ')}.`)
+        .join('\n');
+
+      const dropdownSummary = categoryKeys
+        .map(key => `- ${categoryMeta[key].label}: 40 dropdown options total, with None first, plus a custom text field under the dropdown.`)
+        .join('\n');
+
+      const starterQuestions = [
+        '1. Help me build a luxury rooftop Bratz-chibi prompt with rose-gold glam details.',
+        '2. Show me which categories to change if I want the same character but a different scene and mood.',
+        '3. Give me three polished dropdown combinations for a glossy summer poolside look.',
+        '4. Turn my idea into exact dropdown picks and custom text fields for this generator.'
+      ].join('\n');
+
+      const knowledge = [
+        '- Purpose: This generator creates luxury Bratz-chibi woman portrait prompts with glossy, polished, editorial-style visual direction.',
+        '- Structure: The interface uses collapsible category sections, presets, dropdowns, custom text fields, lock buttons, and separate output areas.',
+        '- Field behavior: Every dropdown begins with None. A typed custom field overrides the dropdown value for that category.',
+        '- Lock behavior: Locked categories should stay unchanged when presets load or when random is used.',
+        '- Prompt logic: The final prompt is assembled in parts: Character details, Styling details, Scene details, Technical details, then a fixed quality finish line.',
+        '- Visual goal: hyper-realistic, glossy, luxury, high-detail, 8K-style character art with glam Bratz-chibi energy.',
+        '- GPT role: The GPT should guide users through these exact categories and help them build cleaner prompts using this generator itself.'
+      ].join('\n');
+
+      const instructionsOutput = `CUSTOM GPT SETUP
+
+Name:
+Luxury Bratz-Chibi Generator Guide
+
+Purpose:
+This Custom GPT helps users build prompts with the Luxury Bratz-Chibi Woman Generator. It should explain the generator's purpose, categories, dropdown structure, custom text fields, prompt assembly logic, and intended art style so a user can create strong prompts with this exact tool.
+
+What this GPT should do:
+- Help users build prompts using this exact generator.
+- Suggest polished combinations that fit the generator's glam luxury style.
+- Convert rough ideas into exact dropdown selections and custom text values.
+- Explain what each category controls.
+- Keep outputs aligned with glossy, premium, hyper-realistic Bratz-chibi character design.
+
+Category groups in this generator:
+${groupedSummary}
+
+Dropdown structure:
+${dropdownSummary}
+
+Prompt assembly logic:
+- Start with: Create a luxury Bratz-chibi woman portrait in a full-body 9:16 vertical composition.
+- Add Character details from Identity & Beauty.
+- Add Styling details from Fashion & Styling.
+- Add Scene details from Scene & Atmosphere.
+- Add Technical details from Technical Controls.
+- Omit categories set to None.
+- Use the custom text value instead of the dropdown value whenever custom text is entered.
+- End with a fixed finish line that reinforces full-body framing, 9:16 vertical composition, clean composition, glossy finish, premium polish, hyper-realistic detail, and 8K character quality.
+
+Intended art style:
+Luxury Bratz-chibi woman portraits with glossy, premium editorial polish in full-body 9:16 vertical framing. The style should feel feminine, clean, highly detailed, glam, hyper-realistic, and upscale.`;
+
+      document.getElementById('custom-gpt-instructions-output').textContent = instructionsOutput;
+      document.getElementById('custom-gpt-starters-output').textContent = starterQuestions;
+      document.getElementById('custom-gpt-knowledge-output').textContent = knowledge;
+    }
+
+    function generateMediaOutputs(v) {
+      const identityBits = [v.ethnicity, v.skin_tone, v.eye_color, v.hairstyle, v.hair_color].filter(Boolean).join(', ');
+      const glamBits = [v.outfit_style, v.top_style, v.bottom_style, v.makeup, v.lashes, v.accessories, v.ornate_elements, v.color_palette, v.art_style].filter(Boolean).join(', ');
+      const moodBits = [v.locations, v.backgrounds, v.weather, v.time_of_day, v.seasons, v.lighting, v.facial_expression].filter(Boolean).join(', ');
+      const heroLine = [identityBits, glamBits, moodBits].filter(Boolean).join(' | ');
+      const energy = v.facial_expression || 'main-character energy';
+      const palette = v.color_palette || 'luxury glam tones';
+      const style = v.art_style || 'any genre or style you want';
+      const location = v.locations || 'a luxury glam setting';
+      const lighting = v.lighting || 'polished glam lighting';
+
+      const videoScript = `8-SECOND VIDEO PROMPT SCRIPT\n\n0-2 sec Voiceover: This is ${energy}, turned all the way up.\n2-5 sec Voiceover: ${palette} energy, glossy confidence, and a look that owns the room.\n5-8 sec Voiceover: Build your luxury character, make it bold, and let the glam speak.\n\nDirection: Voiceover only. No image description. Keep delivery punchy, polished, and ad-ready.`;
+
+      const jinglePrompt = `SUNO JINGLE PROMPT\n\nCreate a short catchy jingle inspired by this glam character setup: ${heroLine || 'luxury glam character concept'}. Keep it bright, memorable, and hooky. Let the genre and style stay flexible so I can choose any vibe I want. Make it feel polished, glossy, confident, and premium. Mention luxury, shine, glam, confidence, and standout energy. Keep the arrangement simple and instantly catchy.`;
+
+      const song30Prompt = `SUNO 30-SECOND SONG PROMPT\n\nCreate a 30-second song inspired by this luxury character concept: ${heroLine || 'luxury glam character concept'}. The song should feel bold, stylish, glossy, and confident. Keep the genre open so I can go pop, hip-hop, R&B, dance, cinematic, or any style I want. Use a strong hook fast, then a short verse, then bring the hook back. Mood references: ${location}, ${lighting}, ${palette}.`;
+
+      const song60Prompt = `SUNO 1-MINUTE SONG PROMPT\n\nCreate a 1-minute song inspired by this luxury glam character setup: ${heroLine || 'luxury glam character concept'}. Keep the style and genre flexible so I can push it in any direction. Build with an intro, hook, short verse, and hook return. Make it sound premium, vivid, confident, glossy, and emotionally memorable. Pull mood from ${location}, ${lighting}, and ${palette}. Main feeling: ${energy}.`;
+
+      const settingsPrompt = `SUNO SETTINGS SUGGESTIONS\n\nWeirdness: 15% to 30%\nStyle Influence: 45% to 65%\nAudio Influence: 20% to 40%\n\nPhoto Reference Note: If you attach a style reference photo, raise Style Influence toward the top of the range. If you want more originality, keep it lower. Genre freedom stays open.`;
+
+      let lyrics = `[Verse]\nGloss on glow, yeah I step in light\n${palette} dreams and my mood sits right\nMain-character walk when I hit that door\nToo much shine, now they want one more\n\n[Hook]\nGlossy, bossy, made to be seen\nLuxury vibe with a whole gold sheen\nBuilt that look, now I own that scene\nBig glam energy, living that dream\n\n[Verse]\n${location} feel with a rich-girl spark\nSoft then bold, I can light the dark\nPick any sound, any lane, any theme\nStill come back looking high-end clean\n\n[Hook]\nGlossy, bossy, made to be seen\nLuxury vibe with a whole gold sheen\nBuilt that look, now I own that scene\nBig glam energy, living that dream`;
+      if (lyrics.length > 1000) lyrics = lyrics.slice(0, 997) + '...';
+
+      document.getElementById('video-script-output').textContent = videoScript;
+      document.getElementById('suno-jingle-output').textContent = jinglePrompt;
+      document.getElementById('suno-30-output').textContent = song30Prompt;
+      document.getElementById('suno-60-output').textContent = song60Prompt;
+      document.getElementById('suno-settings-output').textContent = settingsPrompt;
+      document.getElementById('suno-lyrics-output').textContent = lyrics;
+    }
+
+    function generatePrompt() {
+      const v = Object.fromEntries(Object.keys(categoryMeta).map(key => [key, formatFieldValue(key)]));
+      const beauty = [
+        sentencePart('ethnicity', v.ethnicity),
+        sentencePart('skin tone', v.skin_tone),
+        sentencePart('eye color', v.eye_color),
+        sentencePart('hairstyle', v.hairstyle),
+        sentencePart('hair color', v.hair_color),
+        sentencePart('lashes', v.lashes),
+        sentencePart('makeup', v.makeup),
+        sentencePart('hair gems', v.hair_gems),
+        sentencePart('eyebrows', v.eyebrows),
+        sentencePart('nails', v.nails),
+        sentencePart('hair edges (women only)', v.hair_edges),
+        sentencePart('facial expression', v.facial_expression),
+        sentencePart('facial features', v.facial_features),
+        sentencePart('earrings', v.earrings)
+      ].filter(Boolean).join(', ');
+
+      const styling = [
+        sentencePart('outfit style', v.outfit_style),
+        sentencePart('top style', v.top_style),
+        sentencePart('bottom style', v.bottom_style),
+        sentencePart('shoes', v.shoes),
+        sentencePart('ornate elements', v.ornate_elements),
+        sentencePart('accessories', v.accessories),
+        sentencePart('color palette', v.color_palette),
+        sentencePart('art style', v.art_style)
+      ].filter(Boolean).join(', ');
+
+      const scene = [
+        sentencePart('location', v.locations),
+        sentencePart('background', v.backgrounds),
+        sentencePart('fog', v.fog),
+        sentencePart('weather', v.weather),
+        sentencePart('time of day', v.time_of_day),
+        sentencePart('season', v.seasons)
+      ].filter(Boolean).join(', ');
+
+      const technical = [
+        sentencePart('shadow', v.shadow),
+        sentencePart('camera angle', v.camera_angle),
+        sentencePart('lighting', v.lighting)
+      ].filter(Boolean).join(', ');
+
+      let prompt = 'Create a luxury Bratz-chibi woman portrait in a full-body 9:16 vertical composition.';
+      if (beauty) prompt += ` Character details: ${beauty}.`;
+      if (styling) prompt += ` Styling details: ${styling}.`;
+      if (scene) prompt += ` Scene details: ${scene}.`;
+      if (technical) prompt += ` Technical details: ${technical}.`;
+      prompt += ' Full-body framing, strict 9:16 vertical composition, clean composition, hyper-realistic glossy 8K Bratz-style doll character, premium polish, ultra-detailed rendering, and a subtle gleam in the eyes.';
+      document.getElementById('generated-prompt').textContent = prompt;
+      generateCustomGPTInstructions();
+      generateMediaOutputs(v);
+    }
+
+    async function copyPrompt() {
+      const prompt = document.getElementById('generated-prompt').textContent;
+      await copyTextRaw(prompt, 'copy-feedback');
+    }
+
+    function clearAllFields() {
+      Object.keys(categoryMeta).forEach(key => {
+        if (lockedFields.has(key)) return;
+        const select = document.getElementById(key);
+        const custom = document.getElementById(`${key}_custom`);
+        if (select) Array.from(select.options).forEach(opt => opt.selected = opt.value === 'None');
+        if (custom) custom.value = '';
+      });
+      generatePrompt();
+    }
+
+    function randomizeFields() {
+      let attempts = 0;
+      let signature = '';
+      do {
+        Object.keys(categoryMeta).forEach(key => {
+          if (lockedFields.has(key)) return;
+          const select = document.getElementById(key);
+          const custom = document.getElementById(`${key}_custom`);
+          if (!select) return;
+          const options = Array.from(select.options).map(opt => opt.value).filter(v => v && v !== 'None');
+          Array.from(select.options).forEach(opt => opt.selected = false);
+          if (options.length) {
+            const count = Math.min(options.length, Math.floor(Math.random() * 3) + 1);
+            const pickedValues = getNextCyclingValues(key, options, count);
+            pickedValues.forEach(value => {
+              const match = Array.from(select.options).find(opt => opt.value === value);
+              if (match) match.selected = true;
+            });
+          } else {
+            const noneOpt = Array.from(select.options).find(opt => opt.value === 'None');
+            if (noneOpt) noneOpt.selected = true;
+          }
+          if (custom) custom.value = '';
+        });
+        signature = Object.keys(categoryMeta)
+          .map(key => `${key}:${getSelectedValues(key).join('|') || 'None'}`)
+          .join('||');
+        attempts += 1;
+      } while (recentRandomSignatures.includes(signature) && attempts < 50);
+
+      if (signature) {
+        recentRandomSignatures.push(signature);
+        if (recentRandomSignatures.length > maxRecentRandomSignatures) recentRandomSignatures.shift();
+      }
+      generatePrompt();
+    }
+
+    function saveCurrentPrompt() {
+      const prompt = document.getElementById('generated-prompt').textContent.trim();
+      if (!prompt) return;
+      promptHistory.unshift({ prompt, timestamp: new Date().toLocaleString() });
+      if (promptHistory.length > maxHistoryItems) promptHistory.length = maxHistoryItems;
+      renderPromptHistory();
+      const feedback = document.getElementById('copy-feedback');
+      feedback.textContent = '✅ Prompt saved to history!';
+      showFeedback('copy-feedback');
+      setTimeout(() => { feedback.textContent = '✅ Prompt copied to clipboard!'; }, 2000);
+    }
+
+    function renderPromptHistory() {
+      const list = document.getElementById('prompt-history-list');
+      if (!list) return;
+      if (!promptHistory.length) {
+        list.innerHTML = '<div class="history-item"><p>No saved prompts yet.</p></div>';
+        return;
+      }
+      list.innerHTML = promptHistory.map(item => `
+        <div class="history-item">
+          <span class="history-time">${item.timestamp}</span>
+          <p>${item.prompt}</p>
+        </div>
+      `).join('');
+    }
+
+    function generateThreeVariations() {
+      const base = Object.fromEntries(Object.keys(categoryMeta).map(key => [key, formatFieldValue(key)]));
+      const primary = Object.fromEntries(Object.keys(categoryMeta).map(key => [key, getPrimaryValue(key)]));
+      const sharedEthnicity = base.ethnicity || primary.ethnicity || 'luxury glam identity';
+      const sharedSkinTone = base.skin_tone || primary.skin_tone || 'radiant skin tone';
+      const sharedEyeColor = base.eye_color || primary.eye_color || 'warm brown';
+      const sceneOptions = categoryOptions.locations.filter(v => v !== 'None');
+      const bgOptions = categoryOptions.backgrounds.filter(v => v !== 'None');
+      const hairOptions = categoryOptions.hairstyle.filter(v => v !== 'None');
+      const hairColorOptions = categoryOptions.hair_color.filter(v => v !== 'None');
+      const makeupOptions = categoryOptions.makeup.filter(v => v !== 'None');
+      const browOptions = categoryOptions.eyebrows.filter(v => v !== 'None');
+      const accessoriesOptions = categoryOptions.accessories.filter(v => v !== 'None');
+      const shoesOptions = categoryOptions.shoes.filter(v => v !== 'None');
+      const artStyleOptions = categoryOptions.art_style.filter(v => v !== 'None');
+      const expressionOptions = categoryOptions.facial_expression.filter(v => v !== 'None');
+      const featureOptions = categoryOptions.facial_features.filter(v => v !== 'None');
+      const cameraOptions = categoryOptions.camera_angle.filter(v => v !== 'None');
+      const lightingOptions = categoryOptions.lighting.filter(v => v !== 'None');
+      const shadowOptions = categoryOptions.shadow.filter(v => v !== 'None');
+      const paletteOptions = categoryOptions.color_palette.filter(v => v !== 'None');
+      const weatherOptions = categoryOptions.weather.filter(v => v !== 'None');
+      const timeOptions = categoryOptions.time_of_day.filter(v => v !== 'None');
+      const seasonOptions = categoryOptions.seasons.filter(v => v !== 'None');
+      const ornateOptions = categoryOptions.ornate_elements.filter(v => v !== 'None');
+      const outfitIdeas = ['liquid vinyl corset dress', 'crystal-fringe catsuit', 'feather-trim blazer mini dress', 'metallic sculpted gown', 'street-luxe fur jacket with fitted bodysuit', 'high-gloss tailored power suit'];
+      const poseIdeas = ['one hand on hip with a power stance', 'long-leg runway stride', 'shoulders back with a direct stare', 'turned torso with a commanding over-the-shoulder look', 'dramatic leg pop with one heel forward', 'confident walk-through pose'];
+      const typographyIdeas = ['minimal luxury chrome type accents', 'editorial serif glam text treatment', 'bold glossy title-card styling', 'diamond-lit fashion campaign type', 'sleek neon editorial typography'];
+
+      const variations = [0, 1, 2].map((_, index) => {
+        const hairstyle = pickRandomDifferent(hairOptions, primary.hairstyle, 'body wave sew-in');
+        const hairColor = pickRandomDifferent(hairColorOptions, primary.hair_color, 'jet black');
+        const makeup = pickRandomDifferent(makeupOptions, primary.makeup, 'soft glam');
+        const brows = pickRandomDifferent(browOptions, primary.eyebrows, 'feathered brows');
+        const accessories = pickRandomDifferent(accessoriesOptions, primary.accessories, 'statement rings');
+        const shoes = pickRandomDifferent(shoesOptions, primary.shoes, 'strappy sandals');
+        const artStyle = pickRandomDifferent(artStyleOptions, primary.art_style, 'hyper-realistic');
+        const expression = pickRandomDifferent(expressionOptions, primary.facial_expression, 'main-character energy');
+        const features = pickRandomDifferent(featureOptions, primary.facial_features, 'defined cupid bow');
+        const camera = pickRandomDifferent(cameraOptions, primary.camera_angle, 'full-body centered');
+        const lighting = pickRandomDifferent(lightingOptions, primary.lighting, 'soft cinematic light');
+        const shadow = pickRandomDifferent(shadowOptions, primary.shadow, 'ambient soft shadows');
+        const location = pickRandomDifferent(sceneOptions, primary.locations, 'city rooftop');
+        const background = pickRandomDifferent(bgOptions, primary.backgrounds, 'city skyline');
+        const palette = pickRandomDifferent(paletteOptions, primary.color_palette, 'rose gold and blush');
+        const weather = pickRandomDifferent(weatherOptions, primary.weather, 'clear skies');
+        const timeOfDay = pickRandomDifferent(timeOptions, primary.time_of_day, 'twilight');
+        const season = pickRandomDifferent(seasonOptions, primary.seasons, 'all-season glam');
+        const ornate = pickRandomDifferent(ornateOptions, primary.ornate_elements, 'floating pearls');
+        const outfit = outfitIdeas[(index + Math.floor(Math.random() * outfitIdeas.length)) % outfitIdeas.length];
+        const pose = poseIdeas[(index + Math.floor(Math.random() * poseIdeas.length)) % poseIdeas.length];
+        const typography = typographyIdeas[(index + Math.floor(Math.random() * typographyIdeas.length)) % typographyIdeas.length];
+        return `Variation ${index + 1}
+Create a luxury Bratz-chibi woman portrait in a full-body 9:16 vertical composition. Keep the same character identity as a woman with ${sharedEthnicity} ethnicity, ${sharedSkinTone} skin tone, and ${sharedEyeColor} eyes. Change the styling hard: hairstyle ${hairstyle}, hair color ${hairColor}, makeup ${makeup}, eyebrows ${brows}, facial expression ${expression}, facial features ${features}, outfit ${outfit}, shoes ${shoes}, accessories ${accessories}, ornate elements ${ornate}, art style ${artStyle}. Shift the pose to ${pose}. Put her in ${location} with ${background}, ${weather}, ${timeOfDay}, and ${season}. Use ${camera}, ${lighting}, ${shadow}, and ${typography}. Keep clean composition, hyper-realistic glossy 8K Bratz-style doll detail, full-body framing, strict 9:16 vertical composition, premium polish, and a gleam in the eyes.`;
+      });
+
+      const output = document.getElementById('variations-output');
+      output.innerHTML = variations.map((value, idx) => `<div class="variation-card"><h4>Variation ${idx + 1}</h4><p>${value.replace(/^Variation \d+\n/, '')}</p></div>`).join('');
+      output.dataset.copyText = variations.join('\n\n');
+    }
+
+    function copyVariations() {
+      const output = document.getElementById('variations-output');
+      const copyText = output?.dataset.copyText || '';
+      if (!copyText) return;
+      copyTextRaw(copyText, 'copy-variations-feedback');
+    }
+
+    function scrollToTopPage() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToBottomPage() {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+    }
+
+    function showCopyFeedback() {
+      const feedback = document.getElementById('copy-feedback');
+      feedback.style.opacity = '1';
+      setTimeout(() => { feedback.style.opacity = '0'; }, 2000);
+    }
+
+    async function copyTextRaw(output, feedbackId) {
+      try {
+        await navigator.clipboard.writeText(output);
+        showFeedback(feedbackId);
+      } catch (err) {
+        const textArea = document.createElement('textarea');
+        textArea.value = output;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showFeedback(feedbackId);
+      }
+    }
+
+    async function copyTextById(outputId, feedbackId) {
+      const output = document.getElementById(outputId).textContent;
+      await copyTextRaw(output, feedbackId);
+    }
+
+    function showFeedback(feedbackId) {
+      const feedback = document.getElementById(feedbackId);
+      feedback.style.opacity = '1';
+      setTimeout(() => { feedback.style.opacity = '0'; }, 2000);
+    }
+
+    async function onConfigChange(config) {
+      const titleElement = document.getElementById('app-title');
+      const descriptionElement = document.getElementById('app-description');
+      const outputLabelElement = document.getElementById('output-label');
+      if (titleElement) titleElement.textContent = config.app_title || defaultConfig.app_title;
+      if (descriptionElement) descriptionElement.textContent = config.app_description || defaultConfig.app_description;
+      if (outputLabelElement) outputLabelElement.textContent = config.output_label || defaultConfig.output_label;
+    }
+
+    function mapToCapabilities(config) {
+      return { recolorables: [], borderables: [], fontEditable: undefined, fontSizeable: undefined };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['app_title', config.app_title || defaultConfig.app_title],
+        ['app_description', config.app_description || defaultConfig.app_description],
+        ['output_label', config.output_label || defaultConfig.output_label]
+      ]);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      buildForm();
+      document.querySelectorAll('[data-lock-key]').forEach(btn => {
+        btn.addEventListener('click', () => toggleLock(btn.dataset.lockKey));
+        updateLockButton(btn.dataset.lockKey);
+      });
+      document.querySelectorAll('#generator-form').forEach(form => {
+        form.addEventListener('change', generatePrompt);
+        form.addEventListener('input', generatePrompt);
+      });
+      document.getElementById('generate-btn').addEventListener('click', generatePrompt);
+      document.getElementById('copy-btn').addEventListener('click', copyPrompt);
+      document.getElementById('save-prompt-btn').addEventListener('click', saveCurrentPrompt);
+      document.getElementById('variations-btn').addEventListener('click', generateThreeVariations);
+      document.getElementById('copy-variations-btn').addEventListener('click', copyVariations);
+      document.getElementById('copy-gpt-instructions-btn').addEventListener('click', () => copyTextById('custom-gpt-instructions-output', 'copy-gpt-instructions-feedback'));
+      document.getElementById('copy-gpt-starters-btn').addEventListener('click', () => copyTextById('custom-gpt-starters-output', 'copy-gpt-starters-feedback'));
+      document.getElementById('copy-gpt-knowledge-btn').addEventListener('click', () => copyTextById('custom-gpt-knowledge-output', 'copy-gpt-knowledge-feedback'));
+      document.getElementById('copy-video-script-btn').addEventListener('click', () => copyTextById('video-script-output', 'copy-video-script-feedback'));
+      document.getElementById('copy-suno-jingle-btn').addEventListener('click', () => copyTextById('suno-jingle-output', 'copy-suno-jingle-feedback'));
+      document.getElementById('copy-suno-30-btn').addEventListener('click', () => copyTextById('suno-30-output', 'copy-suno-30-feedback'));
+      document.getElementById('copy-suno-60-btn').addEventListener('click', () => copyTextById('suno-60-output', 'copy-suno-60-feedback'));
+      document.getElementById('copy-suno-settings-btn').addEventListener('click', () => copyTextById('suno-settings-output', 'copy-suno-settings-feedback'));
+      document.getElementById('copy-suno-lyrics-btn').addEventListener('click', () => copyTextById('suno-lyrics-output', 'copy-suno-lyrics-feedback'));
+      document.getElementById('clear-btn').addEventListener('click', clearAllFields);
+      document.getElementById('random-btn').addEventListener('click', randomizeFields);
+      document.getElementById('scroll-up-btn').addEventListener('click', scrollToTopPage);
+      document.getElementById('scroll-down-btn').addEventListener('click', scrollToBottomPage);
+      generatePrompt();
+      if (window.elementSdk) {
+        window.elementSdk.init({ defaultConfig, onConfigChange, mapToCapabilities, mapToEditPanelValues });
+      }
+    });
+  </script>
+</body>
+</html>
